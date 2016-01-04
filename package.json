@@ -1,8 +1,8 @@
 {
-  "name": "dhcpd-fp",
+  "name": "inital-node-babel",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,10 +22,12 @@
     "deep-freeze": "0.0.1",
     "del": "^2.2.0",
     "eslint": "^1.10.3",
+    "eslint-plugin-react": "git+https://github.com/yannickcr/eslint-plugin-react.git",
     "expect": "^1.13.4",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
+    "gulp-grunt": "^0.5.3",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.6",
     "webpack": "^1.12.9",
@@ -34,10 +36,9 @@
   "dependencies": {
     "bluebird": "^3.1.1",
     "express": "^4.13.3",
+    "passport": "^0.3.2",
     "react": "^0.14.5",
     "react-dom": "^0.14.5",
-    "react-router": "^2.0.0-rc4",
-    "webpack": "^1.12.9",
-    "webpack-dev-middleware": "^1.4.0"
+    "react-router": "^2.0.0-rc4"
   }
 }

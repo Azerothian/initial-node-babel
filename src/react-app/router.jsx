@@ -1,6 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
-import { Router, Route, Link, browserHistory } from "react-router";
+//import {render} from "react-dom";
+import {Router, Route, Link, browserHistory} from "react-router";
+
+
 
 const Login = React.createClass({
   contextTypes: {
@@ -33,56 +35,80 @@ const Login = React.createClass({
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label><input ref="email" placeholder="email" defaultValue="joe@example.com" /></label>
-        <label><input ref="pass" placeholder="password" /></label> (hint: password1)<br />
-        <button type="submit">login</button>
+        <label>
+          <input defaultValue="joe@example.com"
+            placeholder="email"
+            ref="txtEmail"
+          />
+        </label>
+        <label>
+          <input
+            placeholder="password"
+            ref="txtPassword"
+          />
+        </label>
+        {"(hint: password1)"}<br />
+        <button type="submit">{"login"}</button>
         {this.state.error && (
-          <p>Bad login information</p>
+          <p>{"Bad login information"}</p>
         )}
       </form>
     );
   },
 });
 const App = React.createClass({
+  displayName: "App",
+  propTypes: {
+    children: React.PropTypes.func,
+  },
   getInitialState() {
     return {
       loggedIn: false, // auth.loggedIn()
     };
   },
 
-  updateAuth(loggedIn) {
-    this.setState({
-      loggedIn: loggedIn,
-    });
-  },
 
   componentWillMount() {
     // auth.onChange = this.updateAuth;
     // auth.login();
   },
-
+  updateAuth(loggedIn) {
+    this.setState({
+      loggedIn: loggedIn,
+    });
+  },
   render() {
     return (
       <div>
         <ul>
           <li>
             {this.state.loggedIn ? (
-              <Link to="/logout">Log out</Link>
+              <Link to="/logout">{"Log out"}</Link>
             ) : (
-              <Link to="/login">Sign in</Link>
+              <Link to="/login">{"Sign in"}</Link>
             )}
           </li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/dashboard">Dashboard</Link> (authenticated)</li>
+          <li><Link to="/about">{"About"}</Link></li>
+          <li><Link to="/dashboard">{"Dashboard"}</Link>{" (authenticated)"}</li>
         </ul>
-        {this.props.children || <p>You are {!this.state.loggedIn && "not"} logged in.</p>}
+        {this.props.children || <p>{"You are "}{!this.state.loggedIn && "not"}{" logged in."}</p>}
       </div>
     );
   },
 });
 
-export default (<Router history={browserHistory}>
-  <Route path="/" component={App}>
-    <Route path="login" component={Login}/>
-  </Route>
-</Router>);
+export default (React.createClass({
+  render() {
+    return (
+      <Router history={browserHistory}>
+        <Route component={App}
+          path="/"
+        >
+          <Route component={Login}
+            path="login"
+          />
+        </Route>
+      </Router>
+    );
+  },
+}));
