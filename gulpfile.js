@@ -1,24 +1,25 @@
+"use strict"; //eslint-disable-line
 require("babel-core/register");
 const gulp = require("gulp");
 const eslint = require("gulp-eslint");
 const del = require("del");
 const mocha = require("gulp-mocha");
 const babel = require("gulp-babel");
+const path = require("path");
+
+const sourcemaps = require("gulp-sourcemaps");
 
 
 gulp.task("clean", () => {
-  return del(["dist/**/*"]);
+  return del(["build/**/*"]);
 });
 
 gulp.task("compile", ["lint"], () => {
-  return gulp.src("src/**/*")
+  return gulp.src(["src/**/*"])
+    .pipe(sourcemaps.init({identityMap: true}))
     .pipe(babel({}))
-    .pipe(gulp.dest("build"));
-});
-
-gulp.task("test", ["compile"], function() {
-  return gulp.src("./build/tests/**/*.js")
-    .pipe(mocha());
+    .pipe(sourcemaps.write(".", {includeContent: true}))
+    .pipe(gulp.dest("build/"));
 });
 
 gulp.task("lint", ["clean"], () => {
@@ -30,8 +31,9 @@ gulp.task("lint", ["clean"], () => {
     .pipe(eslint.failAfterError());
 });
 
+
 gulp.task("watch", () => {
-  gulp.watch("src/**/*.*", ["default"]);
+  gulp.watch("src/**/*.*", ["compile"]);
 });
 
-gulp.task("default", ["test"]);
+gulp.task("default", ["compile"]);
