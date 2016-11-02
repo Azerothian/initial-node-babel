@@ -1,13 +1,13 @@
 {
-  "name": "node-babel-initial",
-  "version": "1.0.0",
+  "name": "initial-node-babel",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Azerothian",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.8.0",
     "babel-eslint": "^4.1.8",
@@ -34,10 +34,12 @@
     "react-dom": "^15.0.2",
     "react-tap-event-plugin": "^1.0.0",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "gulp-sourcemaps": "https://github.com/RungeICT/gulp-sourcemaps.git#dependencies"
   },
   "dependencies": {
     "bluebird": "^3.3.5",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "source-map-support": "^0.4.6"
   }
 }
