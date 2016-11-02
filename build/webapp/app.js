@@ -20,3 +20,4 @@ exports.default = _react2.default.createClass({
     );
   }
 });
+//# sourceMappingURL=app.js.map

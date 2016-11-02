@@ -15,3 +15,4 @@ app.use(_express2.default.static(_path2.default.resolve(__dirname, "../public/")
 app.listen(18081, function () {
   console.log("server listening on port 18081");
 });
+//# sourceMappingURL=index.js.map

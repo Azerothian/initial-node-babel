@@ -8,18 +8,16 @@ const babel = require("gulp-babel");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("./webpack.config");
-const spawn = require("child_process").spawn;
+const sourcemaps = require("gulp-sourcemaps");
 
-
-gulp.task("api-server", (callback) => {
-  let nd = spawn("./launch-nodemon", [], {cwd: process.cwd(), stdio: [0, 1, 2]});
-  nd.on("error", (err) => {
-    console.log("NODEMON ERRROR", err);
-  });
-});
 gulp.task("webpack:dev-server", ["default", "watch"], (callback) => {
   // Start a webpack-dev-server
   //webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+  webpackConfig.plugins.push(new webpack.DefinePlugin({
+    "process.env": {
+      "NODE_ENV": JSON.stringify("development"),
+    },
+  }));
   var compiler = webpack(webpackConfig);
   new WebpackDevServer(compiler, {
     //contentBase: path.resolve(__dirname, "./build/public/"),
@@ -42,17 +40,20 @@ gulp.task("webpack:dev-server", ["default", "watch"], (callback) => {
         secure: false,
       },
     },
-  }).listen(18080, "localhost", (err) => {
-    if (err) {
-      throw err;
-    }
-    gulp.start("api-server");
-  });
+  }).listen(18080, "localhost");
 
 });
 
-gulp.task("webpack:build", ["compile"], (callback) => {
+gulp.task("webpack:build", ["compile:webapp"], (callback) => {
 	// run webpack
+  webpackConfig.plugins.push(new webpack.DefinePlugin({
+    "process.env": {
+      "NODE_ENV": JSON.stringify("production"),
+    },
+  }));
+  webpackConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+  webpackConfig.plugins.push(new webpack.optimize.DedupePlugin());
+  webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
   var compiler = webpack(webpackConfig);
   compiler.run(function(err, stats) {
     console.log(stats.toString({
@@ -87,18 +88,24 @@ gulp.task("clean:public", () => {
 
 gulp.task("compile:server", ["lint:server"], () => {
   return gulp.src(["src/server/**/*"])
+    .pipe(sourcemaps.init({identityMap: true}))
     .pipe(babel({}))
+    .pipe(sourcemaps.write(".", {includeContent: true}))
     .pipe(gulp.dest("build/server"));
 });
 
 gulp.task("compile:webapp", ["lint:webapp"], () => {
   return gulp.src(["src/webapp/**/*"])
+    .pipe(sourcemaps.init({identityMap: true}))
     .pipe(babel({}))
+    .pipe(sourcemaps.write(".", {includeContent: true}))
     .pipe(gulp.dest("build/webapp"));
 });
 gulp.task("compile:tests", ["lint:tests"], () => {
   return gulp.src(["src/tests/**/*"])
+    .pipe(sourcemaps.init({identityMap: true}))
     .pipe(babel({}))
+    .pipe(sourcemaps.write(".", {includeContent: true}))
     .pipe(gulp.dest("build/tests"));
 });
 

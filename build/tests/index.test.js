@@ -20,3 +20,4 @@ describe("index test", function () {
     (0, _expect2.default)(after).toEqual(result);
   });
 });
+//# sourceMappingURL=index.test.js.map
