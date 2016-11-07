@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   entry: {
@@ -11,5 +12,9 @@ module.exports = {
     publicPath: "/assets/",
     filename: "bundle.js",
   },
-  plugins: [],
+  plugins: [new webpack.DefinePlugin({
+    "process.env": {
+      "NODE_ENV": JSON.stringify("development"),
+    },
+  })],
 };

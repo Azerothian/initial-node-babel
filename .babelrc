@@ -3,6 +3,8 @@
   "plugins": [
     ["module-alias", [
       { "src": "./src/utils", "expose": "utils" },
+      { "src": "./src/web", "expose": "web" },
+      { "src": "./src/server", "expose": "server" },
       { "src": "./config", "expose": "config" }
     ]],
     "typecheck",

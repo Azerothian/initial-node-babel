@@ -2,7 +2,7 @@
   "name": "initial-node-babel",
   "version": "0.0.1",
   "description": "",
-  "main": "build/index.js",
+  "main": "build/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,7 +23,7 @@
     "deep-freeze": "0.0.1",
     "del": "^2.2.2",
     "eslint": "^3.9.1",
-    "eslint-plugin-react": "^6.5.0",
+    "eslint-plugin-react": "^6.6.0",
     "expect": "^1.20.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "bluebird": "^3.4.6",
     "express": "^4.14.0",
     "source-map-support": "^0.4.6"
