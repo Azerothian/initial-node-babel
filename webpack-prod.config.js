@@ -4,7 +4,7 @@ const webpack = require("webpack");
 module.exports = {
   entry: {
     app: [
-      path.resolve(__dirname, "./build/webapp/index.js"),
+      path.resolve(__dirname, "./build/web/index.js"),
     ],
   },
   output: {

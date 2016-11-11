@@ -27,7 +27,7 @@ gulp.task("webpack:dev-server", ["default", "watch"], (callback) => {
       aggregateTimeout: 300,
       poll: 1000,
     },
-    publicPath: webpackConfig.output.publicPath,
+    publicPath: webpackDevConfig.output.publicPath,
     stats: {colors: true},
     proxy: {
       "*": {
@@ -62,6 +62,9 @@ gulp.task("copy:public", ["clean:public"], () => {
 gulp.task("clean:server", () => {
   return del(["build/server/**/*"]);
 });
+gulp.task("clean:utils", () => {
+  return del(["build/utils/**/*"]);
+});
 gulp.task("clean:web", () => {
   return del(["build/web/**/*"]);
 });
@@ -81,6 +84,14 @@ gulp.task("compile:server", ["lint:server"], () => {
     .pipe(gulp.dest("build/server"));
 });
 
+gulp.task("compile:utils", ["lint:utils"], () => {
+  return gulp.src(["src/utils/**/*"])
+    .pipe(sourcemaps.init({identityMap: true}))
+    .pipe(babel({}))
+    .pipe(sourcemaps.write(".", {includeContent: true}))
+    .pipe(gulp.dest("build/utils"));
+});
+
 gulp.task("compile:web", ["lint:web"], () => {
   return gulp.src(["src/web/**/*"])
     .pipe(sourcemaps.init({identityMap: true}))
@@ -88,6 +99,7 @@ gulp.task("compile:web", ["lint:web"], () => {
     .pipe(sourcemaps.write(".", {includeContent: true}))
     .pipe(gulp.dest("build/web"));
 });
+
 gulp.task("compile:tests", ["lint:tests"], () => {
   return gulp.src(["src/tests/**/*"])
     .pipe(sourcemaps.init({identityMap: true}))
@@ -96,6 +108,14 @@ gulp.task("compile:tests", ["lint:tests"], () => {
     .pipe(gulp.dest("build/tests"));
 });
 
+gulp.task("lint:utils", ["clean:utils"], () => {
+  return gulp.src(["src/utils/**/*.js"])
+    .pipe(eslint({
+      fix: true,
+    }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
 
 gulp.task("lint:server", ["clean:server"], () => {
   return gulp.src(["src/server/**/*.js"])
@@ -105,6 +125,7 @@ gulp.task("lint:server", ["clean:server"], () => {
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
+
 gulp.task("lint:web", ["clean:web"], () => {
   return gulp.src(["src/web/**/*.js", "src/web/**/*.jsx"])
     .pipe(eslint({
@@ -131,13 +152,16 @@ gulp.task("test:server", ["compile:tests", "compile:server"], function() {
   return gulp.src("./build/tests/server/**/*.js")
     .pipe(mocha());
 });
-
-
+gulp.task("test:utils", ["compile:tests", "compile:utils"], function() {
+  return gulp.src("./build/tests/utils/**/*.js")
+    .pipe(mocha());
+});
 
 gulp.task("watch", () => {
-  gulp.watch("src/web/*.*", ["test:web"]);
-  gulp.watch("src/server/*.*", ["test:server"]);
+  gulp.watch("src/web/**/*.*", ["test:web"]);
+  gulp.watch(["src/server/**/*.*", "./config.js", "./*.config.js"], ["test:server"]);
+  gulp.watch("src/utils/**/*.*", ["test:utils"]);
   gulp.watch("src/public/**/*.*", ["copy:public"]);
 });
 
-gulp.task("default", ["test:server", "test:web", "copy:public"]);
+gulp.task("default", ["test:server", "test:web", "test:utils", "copy:public"]);

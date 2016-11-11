@@ -1,6 +1,6 @@
 module.exports = {
   express: {
-    port: process.env.HTTP_PORT || 18080,
+    port: process.env.HTTP_PORT || 18081,
   }
 };
 
