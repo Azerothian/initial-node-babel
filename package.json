@@ -12,7 +12,7 @@
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-plugin-autobind-class-methods": "^2.1.1",
-    "babel-plugin-module-alias": "^1.6.0",
+    "babel-plugin-module-resolver": "^2.3.0",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-plugin-typecheck": "^3.9.0",
@@ -39,7 +39,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "debug": "^2.2.0",
+    "debug": "^2.3.2",
     "bluebird": "^3.4.6",
     "express": "^4.14.0",
     "source-map-support": "^0.4.6"
