@@ -3,9 +3,9 @@ require("babel-core/register");
 const gulp = require("gulp");
 const eslint = require("gulp-eslint");
 const del = require("del");
-const mocha = require("gulp-mocha");
+// const mocha = require("gulp-mocha");
 const babel = require("gulp-babel");
-const path = require("path");
+// const path = require("path");
 
 const sourcemaps = require("gulp-sourcemaps");
 
